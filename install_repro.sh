@@ -1,8 +1,12 @@
 #!/bin/bash
-# 1. 
-# 2. It will install ingress-nginx + cert manager
-# 3. Create a self-signed CA cert
-# 4. Configurate a few certificates and a test app to demonstrate the bug
+
+# This script will setup the repro as follows:
+# 1. Create a kind cluster called cert-issue-repro
+# 2. It will install cert manager
+# 3. Create a self-signed CA cert and cluster issuer
+# 4. Install Ingress Nginx
+# 5. Configurate a few certificates and a test app to demonstrate the bug
+# 6. Download the CA cert to facilitate curl without `-k` argument.
 
 echo "Creating kind cluster"
 kind create cluster --name cert-issue-repro --config=cluster-config.yaml
