@@ -1,0 +1,60 @@
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo
+
+---
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: hello-test-cert
+  namespace: demo
+spec:
+  secretName: hello-test-cert
+  duration: 2160h
+  renewBefore: 360h
+  subject:
+    organizations:
+    - test
+  isCA: false
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+  usages:
+  - server auth
+  dnsNames:
+  - hello.test
+  issuerRef:
+    name: cluster-ca
+    kind: ClusterIssuer
+
+---
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: hello-test-cert-wrong-san
+  namespace: demo
+spec:
+  secretName: hello-test-cert-wrong-san
+  duration: 2160h
+  renewBefore: 360h
+  subject:
+    organizations:
+    - test
+  isCA: false
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+  usages:
+  - server auth
+  dnsNames:
+  - hello-other.test
+  - hello-other2.test
+  issuerRef:
+    name: cluster-ca
+    kind: ClusterIssuer
